@@ -1,0 +1,76 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: { typeName:       'Task',
+                  typeNamePlural: 'Tasks',
+                  title:           { value: 'TaskName' }}               
+                  
+annotate view ZBUV_C_TaskDraft_TP
+    with 
+{
+   @UI.facet: [ 
+   
+/*   { purpose        : #HEADER,
+     position       : 05,
+     targetQualifier: 'EstimationData',
+     type           : #DATAPOINT_REFERENCE}, */
+ 
+   { purpose        : #HEADER,
+     position       : 10,
+     targetQualifier: 'StatusData',
+     type           : #DATAPOINT_REFERENCE},
+     
+   { position : 10,
+     label    : 'General Information',
+     id       : 'GeneralInfo',   
+     type     : #COLLECTION },
+          
+        { parentId : 'GeneralInfo',
+          position : 20,
+          label    : 'General Info',
+          purpose  : #STANDARD,
+          type     : #FIELDGROUP_REFERENCE,   
+          targetQualifier: 'TaskFields' } ] 
+             
+    @UI.hidden: true
+    TaskUUID;      
+    
+    @EndUserText.label: 'Task ID'
+    @UI.lineItem      : [{ position: 10, importance: #HIGH, type: #STANDARD }]
+    @UI.fieldGroup    : [{ position: 10, qualifier: 'TaskFields' }]
+    TaskID;
+    
+    @EndUserText.label: 'Task Name'
+    @UI.lineItem      : [{ position: 20, importance: #HIGH  }]
+    @UI.fieldGroup    : [{ position: 20, qualifier: 'TaskFields' }]    
+    TaskName; 
+    
+    @EndUserText.label: 'Estimation'
+    @UI.lineItem      : [{ position: 30, importance: #HIGH, type:#AS_DATAPOINT  }]
+    @UI.fieldGroup    : [{ position: 30, qualifier: 'TaskFields' } ] --, type:#AS_DATAPOINT }]
+    --@UI.dataPoint     : { qualifier: 'EstimationData', targetValue: 5, visualization:#RATING } 
+    @UI.dataPoint     : {  targetValue: 5, visualization:#RATING }   
+    TaskEstimation;   
+    
+    @EndUserText.label: 'Task Status'
+    @UI.lineItem      : [{ position: 40, importance: #HIGH,  criticality: 'StatusCriticality' },
+                         { type: #FOR_ACTION, dataAction: 'completeTaskDraft', label: 'Complete Taskt' }]
+    @UI.identification: [{ type: #FOR_ACTION, dataAction: 'completeTaskDraft', label: 'Complete Task' }]
+    @UI.fieldGroup    : [{ position: 40, qualifier: 'TaskFields' }]
+    @UI.selectionField: [{ position: 20 } ]    
+    @UI.dataPoint     : { qualifier  : 'StatusData',
+                              title  : 'Status',
+                          criticality: 'StatusCriticality' } 
+    @UI.textArrangement: #TEXT_ONLY                      
+    @Consumption.valueHelpDefinition: [{ entity: { name   : 'ZBUV_I_Status', 
+                                                   element: 'StatusID'}  }]                         
+    TaskStatus;
+    
+    @EndUserText.label: 'Task Start Date'
+    @UI.lineItem      : [{ position: 50 , importance: #HIGH }]
+    @UI.selectionField: [{ position: 30 }]
+    @UI.fieldGroup    : [{ position: 50, qualifier: 'TaskFields' }]    
+    TaskDate;
+    
+    @UI.lineItem : [{ position: 05, value: '_Project_TP.ProjectName'}]
+    _Project_TP;
+    
+}

@@ -1,0 +1,24 @@
+projection;
+//strict; //Comment this line in to enable strict mode. The strict mode is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZBUV_C_ProjectActive_TP //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Task_TP { create; }
+
+  use action createProjectWithTask;
+  use action completeProject;
+}
+
+define behavior for ZBUV_C_TaskActive_TP //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _Project_TP;
+
+  use action completeTask;
+}

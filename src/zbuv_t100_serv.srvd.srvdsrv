@@ -1,0 +1,8 @@
+@EndUserText.label: 'Service definition for T100 applications'
+define service ZBUV_T100_Serv {
+  expose ZBUV_C_ProjectActive_TP as ProjectActive;
+  expose ZBUV_C_TaskActive_TP as TaskActive;
+  expose ZBUV_C_ProjectDraft_TP as ProjectDraft;
+  expose ZBUV_C_TaskDraft_TP as TaskDraft;
+  expose ZBUV_C_ProjectAnalytics as ProjectAnalytics;
+}

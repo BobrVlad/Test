@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZBUV_MSG</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>BUV:T100 - Messages</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBUV_MSG</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>The name of the project is not unique</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBUV_MSG</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>The Estimation should be between 0 and 5</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

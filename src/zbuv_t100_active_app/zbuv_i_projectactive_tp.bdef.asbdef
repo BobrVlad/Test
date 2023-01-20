@@ -1,0 +1,89 @@
+managed;
+//strict; //Comment this line in to enable strict mode. The strict mode is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZBUV_I_ProjectActive_TP alias Project
+implementation in class zbp_buv_i_projectactive_tp unique
+persistent table zbuv_d_project
+lock master
+//authorization master ( instance )
+etag master LastChangedAt
+{
+
+  create;
+  update;
+  delete;
+  association _Task_TP { create; }
+
+  field ( numbering : managed, readonly )  ProjectUUID;
+  field ( readonly ) LocalCreatedBy,
+                     LocalCreatedAt,
+                     LocalLastChangedBy,
+                     LocalLastChangedAt,
+                     LastChangedAt;
+  field ( mandatory) ProjectID,
+                     ProjectName;
+
+  action ( features : instance ) createProjectWithTask result [1] $self;
+  action ( features : instance ) completeProject result [1] $self;
+
+  determination createDefaultTask on modify { create; }
+
+  validation checkDuplicatetName    on save { field ProjectName; create; }
+  validation checkProjectEstimation on save { field ProjectEstimation; create; }
+
+  mapping for ZBUV_D_PROJECT
+  { ProjectUUID        = projectuuid;
+    ProjectID          = projectid;
+    ProjectName        = projectname;
+    ProjectEstimation  = projectestimation;
+    ProjectStatus      = projectstatus;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedby = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt      = last_changed_at;
+  }
+
+
+}
+
+define behavior for ZBUV_I_TaskActive_TP alias Task
+implementation in class zbp_buv_i_taskactive_tp unique
+persistent table zbuv_d_task
+lock dependent by _Project_TP
+//authorization dependent by _Project_TP
+etag master LastChangedAt
+{
+
+  update;
+  delete;
+  association _Project_TP;
+
+  field ( numbering : managed, readonly ) TaskUUID;
+  field ( readonly ) ProjectUUID,
+                     LocalCreatedBy,
+                     LocalCreatedAt,
+                     LocalLastChangedBy,
+                     LocalLastChangedAt,
+                     LastChangedAt;
+
+  action (features : instance) completeTask result [1] $self;
+
+  validation checkTaskEstimation on save { field TaskEstimation; create; }
+
+  mapping for ZBUV_D_TASK
+  { TaskUUID           = taskuuid;
+    ProjectUUID        = projectuuid;
+    TaskID             = taskid;
+    TaskName           = taskname;
+    TaskEstimation     = taskestimation;
+    TaskStatus         = taskstatus;
+    TaskDate           = taskdate;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedby = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt      = last_changed_at;
+  }
+
+}

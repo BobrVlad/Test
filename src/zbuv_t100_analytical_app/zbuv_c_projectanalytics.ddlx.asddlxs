@@ -1,0 +1,47 @@
+@Metadata.layer: #CORE
+@Search: { searchable: true }   
+                      
+annotate view ZBUV_C_ProjectAnalytics
+    with 
+{
+    @EndUserText.label: 'Project'
+    @UI.lineItem      : [{ position: 10, importance: #HIGH  }]
+    ProjectID;   
+    
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.9 
+    ProjectName;
+ 
+    @EndUserText.label: 'Project Status'    
+    @UI.lineItem      : [{ position: 20, importance: #HIGH  }]
+    @UI.selectionField: [{ position: 10 }]
+    @Consumption.valueHelpDefinition: [{ entity: { name   : 'ZBUV_I_Status', 
+                                                   element: 'StatusID'}  }]     
+    ProjectStatus;
+    
+    @UI.lineItem      : [{ position: 30, importance: #HIGH  }]
+    @UI.selectionField: [{ position: 20 }]
+    ProjectEstimation;    
+    
+    @EndUserText.label: 'Task'
+    @UI.lineItem      : [{ position: 40, importance: #HIGH  }]
+    TaskID;
+    
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.9 
+    TaskName;    
+
+    @EndUserText.label: 'Task Status'     
+    @UI.lineItem      : [{ position: 50, importance: #HIGH  }]
+    @UI.selectionField: [{ position: 30 }]
+    @Consumption.valueHelpDefinition: [{ entity: { name   : 'ZBUV_I_Status', 
+                                                   element: 'StatusID'}  }]     
+    TaskStatus;    
+
+    @UI.lineItem      : [{ position: 60, importance: #HIGH  }]
+    TaskDate;
+    
+    @UI.lineItem      : [{ position: 70, importance: #HIGH  }]
+    TaskEstimation;
+    
+}

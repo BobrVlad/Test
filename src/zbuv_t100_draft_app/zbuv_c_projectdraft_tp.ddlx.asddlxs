@@ -1,0 +1,79 @@
+@Metadata.layer: #CORE
+@Search: { searchable: true }
+@UI.headerInfo: { typeName:       'Project',
+                  typeNamePlural: 'Projects',
+                  title:           { value: 'ProjectName' } }   
+                  
+@UI.presentationVariant: [{ sortOrder: [{by: 'ProjectID'}] }]                    
+                                
+annotate view ZBUV_C_ProjectDraft_TP with 
+{
+   @UI.facet: [ 
+   
+/*  { purpose        : #HEADER,
+     position       : 05,
+     targetQualifier: 'EstimationData',
+     type           : #DATAPOINT_REFERENCE}, */
+     
+   { purpose        : #HEADER,
+     position       : 10,
+     targetQualifier: 'StatusData',
+     type           : #DATAPOINT_REFERENCE},     
+          
+   { position : 10,
+     label    : 'General Information',
+     id       : 'GeneralInfo',   
+     type     : #COLLECTION },
+
+        { parentId : 'GeneralInfo',
+          position : 10,
+          label    : 'General',
+          purpose  : #STANDARD,
+          type     : #IDENTIFICATION_REFERENCE },         
+          
+   { position : 20,
+     label    : 'Tasks',
+     id       : 'Tasks', 
+     purpose  : #STANDARD,  
+     type     : #LINEITEM_REFERENCE,
+     targetElement: '_Task_TP' }    ]
+ 
+    @UI.hidden: true
+    ProjectUUID;     
+    
+    @EndUserText.label: 'Project ID'
+    @UI.lineItem      : [{ position: 10, importance: #HIGH, type: #STANDARD },
+                         { type: #FOR_ACTION, dataAction: 'createProjectWithTaskDraft', label: 'Create with Task' }]
+    @UI.identification: [{ position: 10 }]     
+    ProjectID;
+
+    @EndUserText.label: 'Project Name'
+    @UI.lineItem      : [{ position: 20, importance: #HIGH  }]
+    @UI.identification: [{ position: 20 }]
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.7     
+    ProjectName;
+    
+    @EndUserText.label: 'Estimation'
+    @UI.lineItem      : [{ position: 30, importance: #HIGH, type:#AS_DATAPOINT  }]
+    @UI.identification: [{ position: 30 } ] --, type:#AS_DATAPOINT  }]  
+    --@UI.dataPoint     : { qualifier: 'EstimationData',targetValue: 5, visualization:#RATING }  
+    @UI.dataPoint     : { targetValue: 5, visualization:#RATING }
+    ProjectEstimation;
+    
+    @EndUserText.label: 'Project Status'
+    @UI.lineItem      : [{ position: 40, importance: #HIGH , criticality: 'StatusCriticality' },
+                         { type: #FOR_ACTION, dataAction: 'completeProjectDraft', label: 'Complete Project' }]
+    @UI.identification: [{ position: 40 },
+                         { type: #FOR_ACTION, dataAction: 'completeProjectDraft', label: 'Complete Project' }]
+    @UI.selectionField: [{ position: 10 }]                     
+    @UI.dataPoint     : { qualifier: 'StatusData',
+                          title: 'Status',
+                          criticality: 'StatusCriticality' }  
+    @UI.textArrangement: #TEXT_ONLY                        
+    @Consumption.valueHelpDefinition: [{ entity: { name    : 'ZBUV_I_Status', 
+                                                   element : 'StatusID'}  }] 
+
+    ProjectStatus;
+  
+}
